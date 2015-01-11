@@ -62,11 +62,11 @@ var post_box_collection_times = new L.OverPassLayer({
 	}
 }).addTo(map);
 
-var baseMaps = {
-	"Standard": OpenStreetMap_Mapnik,
-	"Radfahrerkarte": OpenCycleMap
+//var baseMaps = {
+//	"Standard": OpenStreetMap_Mapnik,
+//	"Radfahrerkarte": OpenCycleMap
 //	"Luftbild": Esri_WorldImagery
-};
+//};
 
 //var overlayMaps = {
 //	"Briefkästen (Fehlende Leerungszeiten)": post_box_collection_times,
