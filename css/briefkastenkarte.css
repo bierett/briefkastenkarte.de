@@ -1,0 +1,65 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+}
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+.overlay {
+  position:absolute;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  color: #223;
+  background-color:rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+.title {
+  top:-10px;
+  left:10%;
+  right:10%;
+  height:50px;
+}
+.footer {
+  bottom:30px;
+  left:10%;
+  right:10%;
+}
+.box {
+  bottom:0px;
+  width: 100%;
+  position: fixed;
+}
