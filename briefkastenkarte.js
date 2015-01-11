@@ -14,10 +14,10 @@ var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
-var post_box_collection_times = new L.OverPassLayer({
+var post_box_no_collection_times = new L.OverPassLayer({
 	minzoom: 12,
 	//query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
-	query: "(node(BBOX)[amenity=post_box]);out;",
+	query: "(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
 
 	callback: function(data) {
 		for(i=0;i<data.elements.length;i++) {
@@ -39,15 +39,15 @@ var post_box_collection_times = new L.OverPassLayer({
 			//if ((e.tags.covered) && (e.tags.covered == 'yes')) {popup = popup + 'überdachte Anlage<br>'};
 			popup = popup + '</div><small><a href="http://www.openstreetmap.org/edit?editor=id&node='+e.id+'">Eintrag mit iD-Editor bearbeiten</a></small><br>';
 
-			var cadetblueMarker = L.AwesomeMarkers.icon({
+			var redMarker = L.AwesomeMarkers.icon({
 				icon: 'envelope',
 				prefix: 'fa',
-				markerColor: 'orange',
-				iconColor: 'black',
+				markerColor: 'red',
+				iconColor: 'white',
 				spin:false
 			});
 
-			var marker = L.marker(pos, {icon: cadetblueMarker}).bindPopup(popup);
+			var marker = L.marker(pos, {icon: redMarker}).bindPopup(popup);
 
 
 			//var circle = L.circle(pos, 800, {
@@ -55,6 +55,54 @@ var post_box_collection_times = new L.OverPassLayer({
 			//	fillColor: '#f03',
 			//	fillOpacity: 0.1
 			//}).addTo(map);
+
+			this.instance.addLayer(marker);
+
+		}
+	}
+}).addTo(map);
+
+var post_box_collection_times = new L.OverPassLayer({
+	minzoom: 12,
+	//query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
+	query: "(node(BBOX)[amenity=post_box][collection_times~'.']);out;",
+
+	callback: function(data) {
+		for(i=0;i<data.elements.length;i++) {
+			e = data.elements[i];
+
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+			var popup = this.instance._poiInfo(e.tags,e.id);
+
+			var popup = '<h2>Briefkasten</h2><div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + 'Keine weiteren Informationen verfügbar.<br>'};
+			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times + '<br>'};
+			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
+			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
+			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
+
+			//if (e.tags.name) { popup = popup + e.tags.name + '<br>'};
+			//if ((e.tags.covered) && (e.tags.covered == 'yes')) {popup = popup + 'überdachte Anlage<br>'};
+			popup = popup + '</div><small><a href="http://www.openstreetmap.org/edit?editor=id&node='+e.id+'">Eintrag mit iD-Editor bearbeiten</a></small><br>';
+
+			var greenMarker = L.AwesomeMarkers.icon({
+				icon: 'envelope',
+				prefix: 'fa',
+				markerColor: 'green',
+				iconColor: 'white',
+				spin:false
+			});
+
+			var marker = L.marker(pos, {icon: greenMarker}).bindPopup(popup);
+
+
+			//var circle = L.circle(pos, 800, {
+			//	    	color: 'red',
+			//	fillColor: '#f03',
+			//	fillOpacity: 0.1
+			//))}).addTo(map);
 
 			this.instance.addLayer(marker);
 
