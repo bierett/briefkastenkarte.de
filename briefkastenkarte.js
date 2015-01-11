@@ -121,14 +121,21 @@ var post_box_collection_times = new L.OverPassLayer({
 //};
 
 //L.control.layers(baseMaps, overlayMaps).addTo(map);
-L.control.layers(baseMaps).addTo(map);
+//L.control.layers(baseMaps).addTo(map);
 
 function onLocationFound(e) {
 	var radius = e.accuracy / 2;
 	L.marker(e.latlng).addTo(map)
 //	.bindPopup("Du bist innerhalb von " + radius + " Meter von dieser Stelle.").openPopup();
 //	L.circle(e.latlng, radius).addTo(map);
-	L.circle(e.latlng, 800).addTo(map);
+
+	var circle = L.circle(e.latlng, 800, {
+//		color: 'red',
+		stroke: false,
+		fillColor: '#f03',
+		fillOpacity: 0.1
+	}).addTo(map);
+	//L.circle(e.latlng, 800).addTo(map);
 }
 
 function onLocationError(e) {
