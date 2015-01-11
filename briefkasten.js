@@ -17,7 +17,7 @@ var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/
 var post_box_collection_times = new L.OverPassLayer({
 	minzoom: 12,
 	//query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
-	query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box]);out;",
+	query: "(node(BBOX)[amenity=post_box]);out;",
 
 	callback: function(data) {
 		for(i=0;i<data.elements.length;i++) {
