@@ -1,0 +1,142 @@
+/*
+CSS Menu
+*/
+
+/*
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+*/
+
+#menu {
+  background: #ed922e;
+  width: 100%;
+  height: 60px;
+}
+#menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  display: block;
+  zoom: 1;
+  text-align: center;
+}
+#menu ul:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#menu ul li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+#menu.align-right ul li {
+  float: right;
+}
+#menu.align-center ul {
+  text-align: center;
+}
+#menu ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 15px 25px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  position: relative;
+  -webkit-transition: color .25s;
+  -moz-transition: color .25s;
+  -ms-transition: color .25s;
+  -o-transition: color .25s;
+  transition: color .25s;
+}
+#menu ul li a:hover {
+  color: #333333;
+}
+#menu ul li a:hover:before {
+  width: 100%;
+}
+#menu ul li a:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -3px;
+  top: 19px;
+  height: 6px;
+  width: 6px;
+  background: #ffffff;
+  opacity: .5;
+}
+#menu ul li a:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: #333333;
+  -webkit-transition: width .25s;
+  -moz-transition: width .25s;
+  -ms-transition: width .25s;
+  -o-transition: width .25s;
+  transition: width .25s;
+}
+#menu ul li.last > a:after,
+#menu ul li:last-child > a:after {
+  display: none;
+}
+#menu ul li.active a {
+  color: #333333;
+}
+#menu ul li.active a:before {
+  width: 100%;
+}
+#menu.align-right li.last > a:after,
+#menu.align-right li:last-child > a:after {
+  display: block;
+}
+#menu.align-right li:first-child a:after {
+  display: none;
+}
+
+.fa-2x {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #menu ul li {
+    float: none;
+    display: inline-block;
+  }
+  #menu ul li a {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #fb998c;
+  }
+  #menu ul li.last > a,
+  #menu ul li:last-child > a {
+    border: 0;
+  }
+  #menu ul li a:after {
+    display: none;
+  }
+  #menu ul li a:before {
+    display: none;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .fa-2x {
+    display: inline-block;
+  }
+}
