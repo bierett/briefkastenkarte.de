@@ -8,10 +8,10 @@ html, body {
 
 #map {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
   right: 0;
-  bottom: 72px;
+  bottom: 0;
 }
 
 .info {
@@ -57,11 +57,13 @@ html, body {
   padding-top: 10px;
   position: fixed;
 }
+/*
 .footer {
   bottom:30px;
   left:10%;
   right:10%;
 }
+*/
 .box {
   bottom:0px;
   width: 100%;
