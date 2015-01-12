@@ -146,3 +146,8 @@ map.on('locationfound', onLocationFound);
 map.on('locationerror', onLocationError);
 
 L.control.scale().addTo(map);
+
+//var loadingControl = L.Control.loading({
+//	spinjs: true
+//});
+//map.addControl(loadingControl);
