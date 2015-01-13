@@ -12,6 +12,7 @@ annotation in the source code:
  - JQuery - [MIT License] [6]
  - Control Loading - [MIT License] [7]
  - Bootstrap - [MIT License] [8]
+ - L.GeoSearch - [MIT License] [9]
 
   [1]: http://opensource.org/licenses/mit-license.html
   [2]: https://github.com/Leaflet/Leaflet/blob/master/LICENSE
@@ -21,3 +22,4 @@ annotation in the source code:
   [6]: https://jquery.org/license/
   [7]: https://github.com/ebrelsford/Leaflet.loading/blob/master/LICENSE
   [8]: http://getbootstrap.com/getting-started/#license-faqs
+  [9]: https://github.com/smeijer/L.GeoSearch/blob/master/LICENSE

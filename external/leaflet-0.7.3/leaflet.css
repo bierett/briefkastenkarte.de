@@ -94,12 +94,15 @@
 	}
 .leaflet-right {
 	right: 0;
+	width: 250px;
+	z-index: 100;
 	}
 .leaflet-bottom {
 	bottom: 0;
 	}
 .leaflet-left {
 	left: 0;
+	z-index: 100;
 	}
 .leaflet-control {
 	float: left;

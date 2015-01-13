@@ -123,6 +123,10 @@ var post_box_collection_times = new L.OverPassLayer({
 //L.control.layers(baseMaps, overlayMaps).addTo(map);
 //L.control.layers(baseMaps).addTo(map);
 
+new L.Control.GeoSearch({
+	provider: new L.GeoSearch.Provider.OpenStreetMap()
+}).addTo(map);
+
 function onLocationFound(e) {
 	var radius = e.accuracy / 2;
 	L.marker(e.latlng).addTo(map)
