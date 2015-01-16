@@ -13,6 +13,7 @@ annotation in the source code:
  - Control Loading - [MIT License] [7]
  - Bootstrap - [MIT License] [8]
  - L.GeoSearch - [MIT License] [9]
+ - Leaflet.Locate - [MIT License] [10]
 
   [1]: http://opensource.org/licenses/mit-license.html
   [2]: https://github.com/Leaflet/Leaflet/blob/master/LICENSE
@@ -23,3 +24,4 @@ annotation in the source code:
   [7]: https://github.com/ebrelsford/Leaflet.loading/blob/master/LICENSE
   [8]: http://getbootstrap.com/getting-started/#license-faqs
   [9]: https://github.com/smeijer/L.GeoSearch/blob/master/LICENSE
+  [10]: https://github.com/domoritz/leaflet-locatecontrol/blob/gh-pages/LICENSE
