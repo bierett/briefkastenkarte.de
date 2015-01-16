@@ -184,6 +184,9 @@ L.control.locate({
 //add scale control
 L.control.scale().addTo(map);
 
+//add permalink
+map.addControl(new L.Control.Permalink({text: 'Permalink'}));
+
 //var loadingControl = L.Control.loading({
 //	spinjs: true
 //});
