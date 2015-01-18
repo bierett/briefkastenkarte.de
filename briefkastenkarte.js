@@ -20,7 +20,7 @@ var post_box_no_collection_times = new L.OverPassLayer({
 
 			var popup = '<h4>Briefkasten</h4><div>';
 			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + 'Keine weiteren Informationen verfügbar.<br>'};
-			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times + '<br>'};
+			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times.replace("Su", "So") + '<br>'};
 			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
 			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
 			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
