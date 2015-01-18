@@ -5,104 +5,38 @@ var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x
 	opacity: 0.5
 }).addTo(map);
 
-var OpenCycleMap = L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://www.opencyclemap.org" target="_blank">OpenCycleMap</a>, &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>',
-	opacity: 0.5
-});
-
-var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-});
-
 var post_box_no_collection_times = new L.OverPassLayer({
 	minzoom: 12,
-	//query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
-	query: "(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
+	query: "(node(BBOX)[amenity=post_box]);out;",
 
 	callback: function(data) {
-		for(i=0;i<data.elements.length;i++) {
-			e = data.elements[i];
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
 
 			if (e.id in this.instance._ids) return;
 			this.instance._ids[e.id] = true;
 			var pos = new L.LatLng(e.lat, e.lon);
 			var popup = this.instance._poiInfo(e.tags,e.id);
 
-			var popup = '<h2>Briefkasten</h2><div>';
+			var popup = '<h4>Briefkasten</h4><div>';
 			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + 'Keine weiteren Informationen verfügbar.<br>'};
 			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times + '<br>'};
 			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
 			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
 			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
+			//if (e.tags.collection_times:lastcheck) {popup = popup + '<b>Zuletzt aktualisiert:</b> ' + e.tags.collection_times:lastcheck + '<br>'};
 
-			//if (e.tags.name) { popup = popup + e.tags.name + '<br>'};
-			//if ((e.tags.covered) && (e.tags.covered == 'yes')) {popup = popup + 'überdachte Anlage<br>'};
-			popup = popup + '</div><small><a href="http://www.openstreetmap.org/edit?editor=id&node='+e.id+'">Eintrag mit iD-Editor bearbeiten</a></small><br>';
+			var markerColor = e.tags.collection_times ? 'green':'red';
 
-			var redMarker = L.AwesomeMarkers.icon({
+			var marker = L.AwesomeMarkers.icon({
 				icon: 'envelope',
 				prefix: 'fa',
-				markerColor: 'red',
+				markerColor: markerColor,
 				iconColor: 'white',
 				spin:false
 			});
 
-			var marker = L.marker(pos, {icon: redMarker}).bindPopup(popup);
-
-
-			//var circle = L.circle(pos, 800, {
-			//	    	color: 'red',
-			//	fillColor: '#f03',
-			//	fillOpacity: 0.1
-			//}).addTo(map);
-
-			this.instance.addLayer(marker);
-
-		}
-	}
-}).addTo(map);
-
-var post_box_collection_times = new L.OverPassLayer({
-	minzoom: 12,
-	//query: "http://overpass-api.de/api/interpreter?data=[out:json];(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
-	query: "(node(BBOX)[amenity=post_box][collection_times~'.']);out;",
-
-	callback: function(data) {
-		for(i=0;i<data.elements.length;i++) {
-			e = data.elements[i];
-
-			if (e.id in this.instance._ids) return;
-			this.instance._ids[e.id] = true;
-			var pos = new L.LatLng(e.lat, e.lon);
-			var popup = this.instance._poiInfo(e.tags,e.id);
-
-			var popup = '<h2>Briefkasten</h2><div>';
-			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + 'Keine weiteren Informationen verfügbar.<br>'};
-			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times + '<br>'};
-			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
-			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
-			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
-
-			//if (e.tags.name) { popup = popup + e.tags.name + '<br>'};
-			//if ((e.tags.covered) && (e.tags.covered == 'yes')) {popup = popup + 'überdachte Anlage<br>'};
-			popup = popup + '</div><small><a href="http://www.openstreetmap.org/edit?editor=id&node='+e.id+'">Eintrag mit iD-Editor bearbeiten</a></small><br>';
-
-			var greenMarker = L.AwesomeMarkers.icon({
-				icon: 'envelope',
-				prefix: 'fa',
-				markerColor: 'green',
-				iconColor: 'white',
-				spin:false
-			});
-
-			var marker = L.marker(pos, {icon: greenMarker}).bindPopup(popup);
-
-
-			//var circle = L.circle(pos, 800, {
-			//	    	color: 'red',
-			//	fillColor: '#f03',
-			//	fillOpacity: 0.1
-			//))}).addTo(map);
+			var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 			this.instance.addLayer(marker);
 
@@ -111,9 +45,7 @@ var post_box_collection_times = new L.OverPassLayer({
 }).addTo(map);
 
 //var baseMaps = {
-//	"Standard": OpenStreetMap_Mapnik,
-//	"Radfahrerkarte": OpenCycleMap
-//	"Luftbild": Esri_WorldImagery
+//	"Standard": OpenStreetMap_Mapnik
 //};
 
 //var overlayMaps = {
