@@ -24,7 +24,7 @@ var post_box_no_collection_times = new L.OverPassLayer({
 			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
 			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
 			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
-			//if (e.tags.collection_times:lastcheck) {popup = popup + '<b>Zuletzt aktualisiert:</b> ' + e.tags.collection_times:lastcheck + '<br>'};
+			//if ('["e.tags.collection_times:lastcheck"]') {popup = popup + '<b>Zuletzt aktualisiert:</b> ' + '["e.tags.collection_times:lastcheck"]' + '<br>'};
 
 			var markerColor = e.tags.collection_times ? 'green':'red';
 
@@ -78,7 +78,7 @@ function onLocationFound(e) {
 L.control.locate({
     position: 'topleft',  // set the location of the control
     drawCircle: true,  // controls whether a circle is drawn that shows the uncertainty about the location
-    follow: true,  // follow the user's location
+    follow: false,  // follow the user's location
     setView: true, // automatically sets the map view to the user's location, enabled if `follow` is true
     keepCurrentZoomLevel: false, // keep the current map zoom level when displaying the user's location. (if `false`, use maxZoom)
     stopFollowingOnDrag: false, // stop following when the map is dragged if `follow` is true (deprecated, see below)
