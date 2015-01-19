@@ -25,6 +25,7 @@ var post_box_no_collection_times = new L.OverPassLayer({
 			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
 			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
 			//if ('["e.tags.collection_times:lastcheck"]') {popup = popup + '<b>Zuletzt aktualisiert:</b> ' + '["e.tags.collection_times:lastcheck"]' + '<br>'};
+			popup = popup + '<small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small><br>';
 
 			var markerColor = e.tags.collection_times ? 'green':'red';
 
