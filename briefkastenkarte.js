@@ -27,15 +27,16 @@ var post_box_no_collection_times = new L.OverPassLayer({
 			var month = monthNames[d.getMonth()];
 			var year = d.getFullYear();
 
-			var popup = '<h4>Briefkasten</h4><div>';
-			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + 'Keine weiteren Informationen verfügbar.<br>'};
-			if (e.tags.collection_times) {popup = popup + '<b>Leerungsszeiten:</b> ' + e.tags.collection_times.replace("Su", "So") + '<br>'};
-			if (e.tags.operator) {popup = popup + '<b>Betreiber:</b> ' + e.tags.operator + '<br>'};
-			if (e.tags.brand) {popup = popup + '<b>Marke:</b> ' + e.tags.brand + '<br>'};
-			if (e.tags.ref) {popup = popup + '<b>Standort:</b> ' + e.tags.ref + '<br>'};
-			if (e.tags['collection_times:lastcheck']) {popup = popup + '<b>Zuletzt aktualisiert:</b> ' + date + ". " + month + " " + year + '<br>'};
-			popup = popup + '<small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small><br>';
-
+			var popup = '<div class="wrapper"><div class="table"><div class="row header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+			
+			if (e.tags.collection_times) {popup = popup + '<div class="row"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.brand) {popup = popup + '<div class="row"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
+			popup = popup + '<div class="row"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>';
+			
 			var markerColor = e.tags.collection_times ? 'green':'red';
 
 			var marker = L.AwesomeMarkers.icon({
