@@ -5,7 +5,7 @@ var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x
 	opacity: 0.5
 }).addTo(map);
 
-var post_box_no_collection_times = new L.OverPassLayer({
+var post_box = new L.OverPassLayer({
 	minzoom: 12,
 	query: "(node(BBOX)[amenity=post_box]);out;",
 
@@ -62,15 +62,55 @@ var post_box_no_collection_times = new L.OverPassLayer({
 	}
 }).addTo(map);
 
-//var baseMaps = {
-//	"Standard": OpenStreetMap_Mapnik
-//};
+var post_office = new L.OverPassLayer({
+	minzoom: 12,
+	query: "(node(BBOX)[amenity=post_office ]);out;",
 
-//var overlayMaps = {
-//	"Briefkästen (Fehlende Leerungszeiten)": post_box_collection_times,
-//};
+	callback: function(data) {
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
 
-//L.control.layers(baseMaps, overlayMaps).addTo(map);
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+			var popup = this.instance._poiInfo(e.tags,e.id);
+
+			var popup = '<div class="wrapper"><div class="table"><div class="row header green"><div class="cell">Poststelle</div><div class="cell"></div></div>';
+			if ((!e.tags.opening_hours) && (!e.tags.operator) && (!e.tags.name) && (!e.tags.ref)) {popup = popup + '<div class="row"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+
+			if (e.tags.name) {popup = popup + '<div class="row"><div class="cell"><b>Name:</b></div><div class="cell">' + e.tags.name + '</div></div>'};
+			if (e.tags.opening_hours) {popup = popup + '<div class="row"><div class="cell"><b>Öffnungszeiten:</b></div><div class="cell">' + e.tags.opening_hours.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			popup = popup + '<div class="row"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>';
+
+			var markerColor = e.tags.opening_hours ? 'green':'red';
+
+			var marker = L.AwesomeMarkers.icon({
+				icon: 'building',
+				prefix: 'fa',
+				markerColor: markerColor,
+				iconColor: 'white',
+				spin:false
+			});
+
+			var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+
+			this.instance.addLayer(marker);
+
+		}
+	}
+});
+
+var baseMaps = {
+	"Standard": OpenStreetMap_Mapnik
+};
+
+var overlayMaps = {
+	"Briefkästen": post_box,
+	"Poststellen": post_office
+};
+
 //L.control.layers(baseMaps).addTo(map);
 
 new L.Control.GeoSearch({
@@ -141,3 +181,5 @@ map.addControl(new L.Control.Permalink({text: 'Permalink'}));
 //	spinjs: true
 //});
 //map.addControl(loadingControl);
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
