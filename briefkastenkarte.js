@@ -33,17 +33,17 @@ var post_box = new L.OverPassLayer({
 			//var month = monthNames[d.getMonth()];
 			//var year = d.getFullYear();
 
-			var popup = '<div class="wrapper"><div class="table"><div class="row header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
-			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+			var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
 			
-			if (e.tags.collection_times) {popup = popup + '<div class="row"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
-			if (e.tags.operator) {popup = popup + '<div class="row"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-			if (e.tags.brand) {popup = popup + '<div class="row"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
-			if (e.tags.ref) {popup = popup + '<div class="row"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-			//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
-			if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
-			if (!e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
-			
+			if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
+			if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
+			if (!e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+
 			var markerColor = e.tags.collection_times ? 'green':'red';
 
 			var marker = L.AwesomeMarkers.icon({
@@ -75,14 +75,14 @@ var post_office = new L.OverPassLayer({
 			var pos = new L.LatLng(e.lat, e.lon);
 			var popup = this.instance._poiInfo(e.tags,e.id);
 
-			var popup = '<div class="wrapper"><div class="table"><div class="row header green"><div class="cell">Poststelle</div><div class="cell"></div></div>';
-			if ((!e.tags.opening_hours) && (!e.tags.operator) && (!e.tags.name) && (!e.tags.ref)) {popup = popup + '<div class="row"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+			var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Poststelle</div><div class="cell"></div></div>';
+			if ((!e.tags.opening_hours) && (!e.tags.operator) && (!e.tags.name) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
 
-			if (e.tags.name) {popup = popup + '<div class="row"><div class="cell"><b>Name:</b></div><div class="cell">' + e.tags.name + '</div></div>'};
-			if (e.tags.opening_hours) {popup = popup + '<div class="row"><div class="cell"><b>Öffnungszeiten:</b></div><div class="cell">' + e.tags.opening_hours.replace("Su", "So") + '</div></div>'};
-			if (e.tags.operator) {popup = popup + '<div class="row"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-			if (e.tags.ref) {popup = popup + '<div class="row"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-			popup = popup + '<div class="row"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>';
+			if (e.tags.name) {popup = popup + '<div class="row_pp"><div class="cell"><b>Name:</b></div><div class="cell">' + e.tags.name + '</div></div>'};
+			if (e.tags.opening_hours) {popup = popup + '<div class="row_pp"><div class="cell"><b>Öffnungszeiten:</b></div><div class="cell">' + e.tags.opening_hours.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>';
 
 			var markerColor = e.tags.opening_hours ? 'green':'red';
 
