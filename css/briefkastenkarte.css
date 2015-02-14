@@ -74,3 +74,26 @@ body {
 CSS for map pop
 End
 */
+
+/*
+CSS map
+Begin
+*/
+#map {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+@media (max-width: 767px) {
+  #map {
+    top: 50px;
+  }
+}
+/*
+CSS map
+End
+*/
