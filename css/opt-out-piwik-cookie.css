@@ -1,0 +1,32 @@
+#opt-out-cookie {
+	display: none;
+	a {
+		outline: none;
+	}
+}
+
+.buttons(@border-color) {
+	width: 100px;
+	color: #FFF !important;
+	font-size: 13px !important;
+	font-weight: bold !important;
+	height: 33px !important;
+	line-height: 33px !important;
+	border-radius: 5px !important;
+	border: 1px solid @border-color !important;
+}
+.gradient(@first, @second) {
+	background: -moz-linear-gradient(center top , @first, @second) repeat scroll 0 0 transparent !important;
+	background: -webkit-gradient(linear, center top, center bottom, from(@first), to(@second)) repeat scroll 0 0 transparent !important;
+	background: -ms-linear-gradient(center top , @first, @second) repeat scroll 0 0 transparent !important;
+	background: -o-linear-gradient(center top , @first, @second) repeat scroll 0 0 transparent !important;
+	background: linear-gradient(center top , @first, @second) repeat scroll 0 0 transparent !important;
+}
+.yes {
+	.buttons(#5B8821);
+	.gradient(#AAD44F, #609D29);
+}
+.no {
+	.buttons(#B0333E);
+	.gradient(#F87288, #CE3B46);
+}

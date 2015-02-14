@@ -2,35 +2,25 @@
 <html lang="de">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="content-language" content="de" />
+    <meta http-equiv="content-language" content="de"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Besc">
+    <meta name="description" content="OSM-Themenkarte zur Darstellung von Briefkästen und deren Leerungszeiten">
     <meta name="author" content="Danilo Bretschneider, levante">
     <meta name="publisher" content="Danilo Bretschneider, levante">
-    <meta name="copyright" content="MIT License" />
-    <meta name="title" content="Briefkastenkarte gesucht? » Briefkastenkarte.de" />
-    <meta name="keywords" content="openstreetmap, briefkastenkarte, danilo bretschneider, levante, leaflet, osm, briefkasten, briefkasten gesucht, postkarte, leerungszeiten, deutsche post" />
-    <meta name="date" content="2015-01-21" />
-    <meta name="page-topic" content="Briefkastenkarte" />
-    <meta name="robots" content="index,nofollow" />
+    <meta name="copyright" content="MIT License"/>
+    <meta name="title" content="Briefkastenkarte gesucht? » Briefkastenkarte.de"/>
+    <meta name="keywords"
+          content="openstreetmap, briefkastenkarte, danilo bretschneider, levante, leaflet, osm, briefkasten, briefkasten gesucht, postkarte, leerungszeiten, deutsche post, briefkasten finden, briefkasten in der nähe finden"/>
+    <meta name="date" content="2015-02-14"/>
+    <meta name="page-topic" content="Briefkastenkarte"/>
+    <meta name="robots" content="index,nofollow"/>
+
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.png" type="image/png"/>
     <link rel="shortcut icon" href="images/favicon.png" type="image/png"/>
 
     <title>Briefkastenkarte gesucht? » Briefkastenkarte.de</title>
-
-    <link rel="stylesheet" href="css/popup.css" />
-
-    <!-- Bootstrap - downloaded from http://getbootstrap.com/getting-started -->
-    <link href="external/bootstrap/bootstrap.css" rel="stylesheet">
-    <link href="external/bootstrap/navbar-static-top.css" rel="stylesheet">
-    <script src="external/bootstrap/ie-emulation-modes-warning.js"></script>
-    <!-- Unterstützung für Media Queries und HTML5-Elemente in IE8 über HTML5 shim und Respond.js -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <!-- Leaflet - downloaded from http://leafletjs.com/download.html -->
     <link rel="stylesheet" href="external/leaflet-0.7.3/leaflet.css"/>
@@ -53,91 +43,160 @@
     <!-- L.GeoSearch - downloaded from https://github.com/smeijer/L.GeoSearch -->
     <script src="external/l.geosearch/l.control.geosearch.js"></script>
     <script src="external/l.geosearch/l.geosearch.provider.openstreetmap.js"></script>
-    <link rel="stylesheet" href="external/l.geosearch/l.geosearch.css" />
+    <link rel="stylesheet" href="external/l.geosearch/l.geosearch.css"/>
 
     <!-- Leaflet.Locate - downloaded from https://github.com/domoritz/leaflet-locatecontrol.git -->
-    <link rel="stylesheet" href="external/locate-control/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="external/locate-control/L.Control.Locate.min.css"/>
     <!--[if lt IE 9]>
     <link rel="stylesheet" href="external/locate-control/L.Control.Locate.ie.min.css"/>
     <![endif]-->
-    <script src="external/locate-control/L.Control.Locate.js" ></script>
+    <script src="external/locate-control/L.Control.Locate.js"></script>
 
     <!-- Leaflet Permalink - downloaded from https://github.com/shramov/leaflet-plugins -->
-    <script src="external/leaflet-permalink/Permalink.js" ></script>
-    <script src="external/leaflet-permalink/Permalink.Layer.js" ></script>
-    <script src="external/leaflet-permalink/Permalink.Marker.js" ></script>
+    <script src="external/leaflet-permalink/Permalink.js"></script>
+    <script src="external/leaflet-permalink/Permalink.Layer.js"></script>
+    <script src="external/leaflet-permalink/Permalink.Marker.js"></script>
 
-    <!-- JQuery - downloaded from http://jquery.com/download -->
+    <!-- jQuery - downloaded from http://jquery.com/download -->
     <script src="external/jquery/jquery-2.1.3.min.js"></script>
+
+    <!-- jQuery UI - downloaded from http://jqueryui.com/download/ -->
+    <script src="external/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="external/jquery-ui-1.11.3/jquery-ui.css"/>
+
+    <!-- jQuery Cookie Plugin - downloaded from https://github.com/carhartl/jquery-cookie -->
+    <script src="external/jquery-cookie-plugin-v1.4.1/jquery.cookie.js"></script>
+
+    <!-- Piwik Opt-out -->
+    <link rel="stylesheet" href="css/opt-out-piwik-cookie.css"/>
+    <script src="opt-out-piwik-cookie.js"></script>
+
+    <!-- Sparkling Theme -->
+    <link rel="stylesheet" id="sparkling-bootstrap-css" href="external/bootstrap/bootstrap.css" type="text/css"
+          media="all">
+    <link rel="stylesheet" id="sparkling-style-css" href="css/sparkling.css" type="text/css" media="all">
+    <link rel="stylesheet" id="sparkling-style-css" href="css/sparkling-fontface.css" type="text/css" media="all">
+
+    <link rel="stylesheet" href="css/briefkastenkarte.css" type="text/css" media="all">
 
 </head>
 
-<body>
+<body class="page page-id-1821 page-template page-template-page-fullwidth page-template-page-fullwidth-php group-blog">
 
-<!-- Statische Navbar -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Navigation ein-/ausblenden</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href=".">briefkastenkarte.de</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li></li>
-                <li><a href="mailto:info@briefkastenkarte.de">Kontakt</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Einstellungen<span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!--li><a href="#">Aktion</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Nav-Überschrift</li>
-                        <li><a href="#">Abgetrennter Link</a></li-->
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Weitere
-                        Informationen<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="https://wiki.openstreetmap.org/wiki/DE:Briefkastenkarte" target="_blank">OpenStreetMap Wiki</a></li>
-                        <li><a href="index.html" target="_blank">Hilfe</a></li>
-                        <!--li class="divider"></li>
-                        <li class="dropdown-header">Nav-Überschrift</li>
-                        <li><a href="#">Abgetrennter Link</a></li-->
-                    </ul>
-                </li>
-            </ul>
-            <!--form class="navbar-form navbar-right">
-                <input class="form-control" type="text" placeholder="Suchen...">
-            </form-->
-            <!--ul class="nav navbar-nav navbar-right">
-                <li><a href="http://holdirbootstrap.de/examples/navbar/">Standard</a></li>
-                <li><a href="http://holdirbootstrap.de/examples/navbar-static-top/">Oben statisch <span class="sr-only">(aktuell)</span></a></li>
-                <li><a href="index.html">Hilfe</a></li>
-            </ul-->
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</nav>
-
-<div class="container">
-    <div id="map"></div>
+<div id="opt-out-cookie" title="Tracking ein-/ ausschalten">
+    <iframe style="border: 0; height: 200px; width: 100%;"
+            src="http://piwik.bretsch.net/index.php?module=CoreAdminHome&action=optOut&language=de"></iframe>
 </div>
-<!-- /container -->
+
+<div id="page" class="hfeed site">
+
+    <header id="masthead" class="site-header" role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="site-navigation-inner col-sm-12">
+                        <div class="navbar-header">
+                            <button type="button" class="btn navbar-toggle" data-toggle="collapse"
+                                    data-target=".navbar-ex1-collapse">
+                                <span class="sr-only">Navigation ein-/ausblenden</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
 
 
-<!-- Bootstrap-JavaScript
-================================================== -->
-<!-- Am Ende des Dokuments platziert, damit Seiten schneller laden -->
-<script src="external/bootstrap/bootstrap.js"></script>
-<!-- IE10-Anzeigefenster-Hack für Fehler auf Surface und Desktop-Windows-8 -->
-<script src="external/bootstrap/ie10-viewport-bug-workaround.js"></script>
+                            <div id="logo">
+                                <span class="site-name"><a class="navbar-brand" href="http://www.briefkastenkarte.de/"
+                                                           title="Briefkastenkarte.de"
+                                                           rel="home">Briefkastenkarte.de</a></span>
+                            </div>
+                            <!-- end of #logo -->
+
+
+                        </div>
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <ul id="menu-top" class="nav navbar-nav">
+                                <li id="menu-item-1774"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1774 dropdown">
+                                    <a aria-expanded="false" title="About" href="#" data-toggle="dropdown"
+                                       class="dropdown-toggle">Einstellungen <span class="caret"></span></a>
+                                    <ul role="menu" class=" dropdown-menu">
+                                        <!--li id="menu-item-1788"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1788">
+                                            <a title="Languages" href="http://colorlib.com/sparkling/languages/">Languages</a>
+                                        </li>
+                                        <li id="menu-item-1789"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1789">
+                                            <a title="Full Width Page" href="http://colorlib.com/sparkling/full-width/"><span
+                                                    class="glyphicon glyphicon-align-justify"></span>&nbsp;Full Width
+                                                Page</a></li>
+                                        <li id="menu-item-1775"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1775">
+                                            <a title="Page Image Alignment"
+                                               href="http://colorlib.com/sparkling/about/page-image-alignment/"><span
+                                                    class="glyphicon glyphicon-picture"></span>&nbsp;Page Image
+                                                Alignment</a></li>
+                                        <li id="menu-item-1776"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1776">
+                                            <a title="Page Markup And Formatting"
+                                               href="http://colorlib.com/sparkling/about/page-markup-and-formatting/"><span
+                                                    class="glyphicon glyphicon-leaf"></span>&nbsp;Page Markup And
+                                                Formatting</a></li>
+                                        <li role="presentation" class="dropdown-header">Comment options</li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li id="menu-item-1778"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1778">
+                                            <a title="Page with comments"
+                                               href="http://colorlib.com/sparkling/about/page-with-comments/"><span
+                                                    class="glyphicon glyphicon-comment"></span>&nbsp;Page with comments</a>
+                                        </li>
+                                        <li id="menu-item-1779"
+                                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1779">
+                                            <a title="Page with comments disabled"
+                                               href="http://colorlib.com/sparkling/about/page-with-comments-disabled/"><span
+                                                    class="glyphicon glyphicon-remove"></span>&nbsp;Page with comments
+                                                disabled</a></li>
+                                        <li role="presentation" class="dropdown-header">More options</li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation" class="disabled"><a href="#">This item is disabled</a>
+                                        </li-->
+                                    </ul>
+                                </li>
+                                <li id="menu-item-1782"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1782"><a
+                                        title="Blog" target="_blank" href="http://blog.briefkastenkarte.de/">Blog</a>
+                                </li>
+                                <li id="menu-item-1782"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1782"><a
+                                        title="Kontakt" target="_blank"
+                                        href="http://blog.briefkastenkarte.de/kontakt/">Kontakt</a>
+                                </li>
+                                <li id="menu-item-1782"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1782"><a
+                                        title="Datenschutz" target="_blank"
+                                        href="http://blog.briefkastenkarte.de/datenschutz/">Datenschutz</a>
+                                </li>
+                                <li id="menu-item-1782"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1782"><a
+                                        title="Impressum" target="_blank"
+                                        href="http://blog.briefkastenkarte.de/impressum/">Impressum</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- .site-navigation -->
+    </header>
+    <!-- #masthead -->
+
+    <div id="content" class="site-content">
+        <div id="map"></div>
+    </div>
+
+</div>
+<!-- #page -->
+<script type="text/javascript" src="external/bootstrap/bootstrap.js"></script>
 <script src="briefkastenkarte.js"></script>
 
 <!-- Piwik -->
@@ -155,7 +214,7 @@
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<noscript><p><img src="//piwik.bretsch.net/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//piwik.bretsch.net/piwik.php?idsite=2" style="border:0;" alt=""/></p></noscript>
 <!-- End Piwik Code -->
 
 </body>
