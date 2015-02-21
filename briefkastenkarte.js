@@ -103,6 +103,7 @@ var post_office = new L.OverPassLayer({
 });
 
 var post_box_service_area = new L.OverPassLayer({
+//var post_box_service_area = new L.OverPassLayer({
 	minzoom: 12,
 	query: "(node(BBOX)[amenity=post_box ]);out;",
 
@@ -132,11 +133,16 @@ var baseMaps = {
 	"Standard": OpenStreetMap_Mapnik
 };
 
-var overlayMaps = {
-	"Briefkästen": post_box,
-	"Poststellen": post_office,
-	"Versorgungsgebiet von Briefkästen": post_box_service_area
+var groupedOverlays = {
+    "Basis": {
+        "Briefkästen": post_box,
+        "Poststellen": post_office
+    },
+    "Experte": {
+        "Versorgungsgebiet von Briefkästen": post_box_service_area
+    }
 };
+//var options = { exclusiveGroups: ["Basis"] };
 
 //L.control.layers(baseMaps).addTo(map);
 
@@ -209,4 +215,6 @@ map.addControl(new L.Control.Permalink({text: 'Permalink'}));
 //});
 //map.addControl(loadingControl);
 
-L.control.layers(baseMaps, overlayMaps).addTo(map);
+//L.control.layers(baseMaps, groupedOverlays, options).addTo(map);
+//L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(map);
+L.control.groupedLayers(baseMaps, groupedOverlays).addTo(map);

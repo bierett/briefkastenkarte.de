@@ -18,6 +18,7 @@ annotation in the source code:
  - jQuery UI - [MIT License] [12]
  - jQuery Cookie Plugin - [MIT License] [13]
  - Sparkling Theme [GNU GPL v3.0] [14]
+ - Leaflet.groupedlayercontrol - [MIT License] [15]
 
   [1]: http://opensource.org/licenses/mit-license.html
   [2]: https://github.com/Leaflet/Leaflet/blob/master/LICENSE
@@ -33,3 +34,4 @@ annotation in the source code:
   [12]: https://jquery.org/license/
   [13]: https://github.com/carhartl/jquery-cookie/blob/master/MIT-LICENSE.txt
   [14]: https://github.com/puikinsh/Sparkling/blob/master/readme.txt
+  [15]: https://github.com/ismyrnow/Leaflet.groupedlayercontrol/blob/gh-pages/MIT-LICENSE.txt

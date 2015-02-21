@@ -305,6 +305,7 @@
 	padding: 6px 10px 6px 6px;
 	color: #333;
 	background: #fff;
+	width: 250px;
 	}
 .leaflet-control-layers-selector {
 	margin-top: 2px;
