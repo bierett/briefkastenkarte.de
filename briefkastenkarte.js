@@ -102,13 +102,40 @@ var post_office = new L.OverPassLayer({
 	}
 });
 
+var post_box_service_area = new L.OverPassLayer({
+	minzoom: 12,
+	query: "(node(BBOX)[amenity=post_box ]);out;",
+
+	callback: function(data) {
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
+
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+
+            var circle = L.circle(pos, 1000, {
+                fillColor: "#ff7800",
+                color: "#ff7800",
+                opacity: 0.1,
+                fillOpacity: 0.1
+            }
+            ).addTo(map);
+
+			this.instance.addLayer(circle);
+
+		}
+	}
+});
+
 var baseMaps = {
 	"Standard": OpenStreetMap_Mapnik
 };
 
 var overlayMaps = {
 	"Briefkästen": post_box,
-	"Poststellen": post_office
+	"Poststellen": post_office,
+	"Versorgungsgebiet von Briefkästen": post_box_service_area
 };
 
 //L.control.layers(baseMaps).addTo(map);
