@@ -82,9 +82,9 @@ Begin
 #map {
   position: absolute;
   top: 76px;
+  bottom: 70px;
   left: 0;
   right: 0;
-  bottom: 0;
   z-index: -1;
 }
 

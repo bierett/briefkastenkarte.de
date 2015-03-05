@@ -1130,7 +1130,11 @@ p.logged-in-as {
 
 #footer-area {
   background-color: #313233;
-  color: #999;
+  color: #999;  
+  position:fixed;
+  bottom:0px;
+  text-align:center;
+  width:100%;
 }
 #footer-area a {
   color: #DADADA;
