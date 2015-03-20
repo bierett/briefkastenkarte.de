@@ -103,6 +103,313 @@ var post_box = new L.OverPassLayer({
 	}
 }).addTo(map);
 
+var post_box_no_collection_times = new L.OverPassLayer({
+	minzoom: 12,
+	query: "(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
+
+	callback: function(data) {
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
+
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+			var popup = this.instance._poiInfo(e.tags,e.id);
+
+			var currentTime = new Date(); //today
+
+			//collection_times:lastcheck
+			var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
+			var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
+			var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
+
+			//collection_times:last_check
+			var collection_times_last_check = e.tags['collection_times:last_check'];
+			var collection_times_last_check_d = new Date(collection_times_last_check);
+			var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
+
+			//lastcheck
+			var lastcheck = e.tags['lastcheck'];
+			var lastcheck_d = new Date(lastcheck);
+			var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
+
+			//last_checked
+			var last_checked = e.tags['last_checked'];
+			var last_checked_d = new Date(last_checked);
+			var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
+
+			//last_check
+			var last_check = e.tags['last_check'];
+			var last_check_d = new Date(last_check);
+			var last_check_milliseconds = Math.abs(currentTime-last_check_d);
+
+			//check_date
+			var check_date = e.tags['check_date'];
+			var check_date_d = new Date(check_date);
+			var check_date_milliseconds = Math.abs(currentTime-check_date_d);
+
+			var checkArray = new Array(6);
+			if (e.tags['collection_times:lastcheck']) {
+				checkArray[0] = collection_times_lastcheck_milliseconds;
+			};
+			if (e.tags['collection_times:last_check']) {
+				checkArray[1] = collection_times_last_check_milliseconds;
+			};
+			if (e.tags['lastcheck']) {
+				checkArray[2] = lastcheck_milliseconds;
+			};
+			if (e.tags['last_checked']) {
+				checkArray[3] = last_checked_milliseconds;
+			};
+			if (e.tags['last_check']) {
+				checkArray[4] = last_check_milliseconds;
+			};
+			if (e.tags['check_date']) {
+				checkArray[5] = check_date_milliseconds;
+			};
+
+			checkArray.sort(function(a, b){return a-b});
+			var days = (checkArray[0] / (1000*60*60*24));
+
+			var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+
+			if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
+			if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
+
+			if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+
+			var marker = L.AwesomeMarkers.icon({
+				icon: 'envelope',
+				prefix: 'fa',
+				markerColor: 'red',
+				iconColor: 'white',
+				spin:false
+			});
+
+			var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+
+			this.instance.addLayer(marker);
+
+		}
+	}
+});
+
+var post_box_sunday = new L.OverPassLayer({
+	minzoom: 12,
+	query: "(node(BBOX)[amenity=post_box][collection_times~'Su']);out;",
+
+	callback: function(data) {
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
+
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+			var popup = this.instance._poiInfo(e.tags,e.id);
+
+			var currentTime = new Date(); //today
+
+			//collection_times:lastcheck
+			var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
+			var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
+			var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
+
+			//collection_times:last_check
+			var collection_times_last_check = e.tags['collection_times:last_check'];
+			var collection_times_last_check_d = new Date(collection_times_last_check);
+			var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
+
+			//lastcheck
+			var lastcheck = e.tags['lastcheck'];
+			var lastcheck_d = new Date(lastcheck);
+			var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
+
+			//last_checked
+			var last_checked = e.tags['last_checked'];
+			var last_checked_d = new Date(last_checked);
+			var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
+
+			//last_check
+			var last_check = e.tags['last_check'];
+			var last_check_d = new Date(last_check);
+			var last_check_milliseconds = Math.abs(currentTime-last_check_d);
+
+			//check_date
+			var check_date = e.tags['check_date'];
+			var check_date_d = new Date(check_date);
+			var check_date_milliseconds = Math.abs(currentTime-check_date_d);
+
+			var checkArray = new Array(6);
+			if (e.tags['collection_times:lastcheck']) {
+				checkArray[0] = collection_times_lastcheck_milliseconds;
+			};
+			if (e.tags['collection_times:last_check']) {
+				checkArray[1] = collection_times_last_check_milliseconds;
+			};
+			if (e.tags['lastcheck']) {
+				checkArray[2] = lastcheck_milliseconds;
+			};
+			if (e.tags['last_checked']) {
+				checkArray[3] = last_checked_milliseconds;
+			};
+			if (e.tags['last_check']) {
+				checkArray[4] = last_check_milliseconds;
+			};
+			if (e.tags['check_date']) {
+				checkArray[5] = check_date_milliseconds;
+			};
+
+			checkArray.sort(function(a, b){return a-b});
+			var days = (checkArray[0] / (1000*60*60*24));
+
+			var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+
+			if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
+			if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
+
+			if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+
+			var marker = L.AwesomeMarkers.icon({
+				icon: 'envelope',
+				prefix: 'fa',
+				markerColor: 'green',
+				iconColor: 'white',
+				spin:false
+			});
+
+			var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+
+			this.instance.addLayer(marker);
+
+		}
+	}
+});
+var currentTime = new Date(); //today
+var day = currentTime.getDate();
+
+var monthArray = new Array(12);
+monthArray[0] = "01";
+monthArray[1] = "02";
+monthArray[2] = "03";
+monthArray[3] = "04";
+monthArray[4] = "05";
+monthArray[5] = "06";
+monthArray[6] = "07";
+monthArray[7] = "08";
+monthArray[8] = "09";
+monthArray[9] = "10";
+monthArray[10] = "11";
+monthArray[11] = "12";
+var month = monthArray[currentTime.getUTCMonth()];
+
+var year = currentTime.getFullYear() - 1;
+
+var post_box_check_collection_times = new L.OverPassLayer({
+	minzoom: 12,
+	query: "(   ( node(BBOX)[amenity=post_box];  - node(BBOX)[amenity=post_box](newer:'" + year + "-" + month + "-" + day + "T00:00:00Z'); ););out center meta;",
+
+	callback: function(data) {
+		for(var i=0;i<data.elements.length;i++) {
+			var e = data.elements[i];
+
+			if (e.id in this.instance._ids) return;
+			this.instance._ids[e.id] = true;
+			var pos = new L.LatLng(e.lat, e.lon);
+			var popup = this.instance._poiInfo(e.tags,e.id);
+
+			var currentTime = new Date(); //today
+
+			//collection_times:lastcheck
+			var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
+			var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
+			var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
+
+			//collection_times:last_check
+			var collection_times_last_check = e.tags['collection_times:last_check'];
+			var collection_times_last_check_d = new Date(collection_times_last_check);
+			var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
+
+			//lastcheck
+			var lastcheck = e.tags['lastcheck'];
+			var lastcheck_d = new Date(lastcheck);
+			var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
+
+			//last_checked
+			var last_checked = e.tags['last_checked'];
+			var last_checked_d = new Date(last_checked);
+			var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
+
+			//last_check
+			var last_check = e.tags['last_check'];
+			var last_check_d = new Date(last_check);
+			var last_check_milliseconds = Math.abs(currentTime-last_check_d);
+
+			//check_date
+			var check_date = e.tags['check_date'];
+			var check_date_d = new Date(check_date);
+			var check_date_milliseconds = Math.abs(currentTime-check_date_d);
+
+			var checkArray = new Array(6);
+			if (e.tags['collection_times:lastcheck']) {
+				checkArray[0] = collection_times_lastcheck_milliseconds;
+			};
+			if (e.tags['collection_times:last_check']) {
+				checkArray[1] = collection_times_last_check_milliseconds;
+			};
+			if (e.tags['lastcheck']) {
+				checkArray[2] = lastcheck_milliseconds;
+			};
+			if (e.tags['last_checked']) {
+				checkArray[3] = last_checked_milliseconds;
+			};
+			if (e.tags['last_check']) {
+				checkArray[4] = last_check_milliseconds;
+			};
+			if (e.tags['check_date']) {
+				checkArray[5] = check_date_milliseconds;
+			};
+
+			checkArray.sort(function(a, b){return a-b});
+			var days = (checkArray[0] / (1000*60*60*24));
+
+			var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
+			if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
+
+			if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
+			if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
+			if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
+			if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
+			//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
+			if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
+
+			if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+
+			var marker = L.AwesomeMarkers.icon({
+				icon: 'envelope',
+				prefix: 'fa',
+				markerColor: 'orange',
+				iconColor: 'white',
+				spin:false
+			});
+
+			var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+
+			this.instance.addLayer(marker);
+
+		}
+	}
+});
+
 var post_office = new L.OverPassLayer({
 	minzoom: 12,
 	query: "(node(BBOX)[amenity=post_office ]);out;",
@@ -144,7 +451,6 @@ var post_office = new L.OverPassLayer({
 });
 
 var post_box_service_area = new L.OverPassLayer({
-//var post_box_service_area = new L.OverPassLayer({
 	minzoom: 12,
 	query: "(node(BBOX)[amenity=post_box ]);out;",
 
@@ -180,6 +486,9 @@ var groupedOverlays = {
         "Poststellen": post_office
     },
     "Experte": {
+	"Briefkästen mit Leerung am Sonntag": post_box_sunday,
+	"Briefkästen ohne Leerungszeit": post_box_no_collection_times,
+	"Briefkästen älter als ein Jahr": post_box_check_collection_times,
         "Versorgungsgebiet von Briefkästen": post_box_service_area
     }
 };
