@@ -62,9 +62,23 @@ body {
 .cell {
   padding: 5px 15px;
   display: table-cell;
+  width: 130px;
+  
 }
 @media screen and (max-width: 580px) {
   .cell {
+    padding: 2px 12px;
+    display: block;
+  }
+}
+
+.cell_noinfo {
+  padding: 5px 15px;
+  display: table-cell;
+  
+}
+@media screen and (max-width: 580px) {
+  .cell_noinfo {
     padding: 2px 12px;
     display: block;
   }
