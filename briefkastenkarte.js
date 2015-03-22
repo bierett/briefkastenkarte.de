@@ -52,8 +52,32 @@ $(document).ready(function() {
 			var html = '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + ref + '</div></div>';
 			this.content += html;
 		};
-	};
 
+		this.appendStreet = function(street) {
+			var html = '<div class="row_pp"><div class="cell"><b>Straße:</b></div><div class="cell">' + street + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendPostcode = function(postcode) {
+			var html = '<div class="row_pp"><div class="cell"><b>PLZ:</b></div><div class="cell">' + postcode + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendHousenumber = function(housenumber) {
+			var html = '<div class="row_pp"><div class="cell"><b>Hausnummer:</b></div><div class="cell">' + housenumber + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendCity = function(city) {
+			var html = '<div class="row_pp"><div class="cell"><b>Stadt:</b></div><div class="cell">' + city + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendCountry = function(country) {
+			var html = '<div class="row_pp"><div class="cell"><b>Land:</b></div><div class="cell">' + country + '</div></div>';
+			this.content += html;
+		};
+	};
 
 	var map = new L.map('map').setView([50.7344700,7.0987190], 15);
 
@@ -126,6 +150,83 @@ $(document).ready(function() {
 			}
 		}
 	}).addTo(map);
+
+	var post_box_addr_street = new L.OverPassLayer({
+		minzoom: 12,
+		query: "(node(BBOX)[amenity=post_box]['addr:street'~'.']);out;",
+
+		callback: function(data) {
+			for(var i=0;i<data.elements.length;i++) {
+				var e = data.elements[i];
+
+				if (e.id in this.instance._ids) return;
+				this.instance._ids[e.id] = true;
+
+				var popupContent = new PopupContent("Briefkasten");
+				if ((!e.tags.collection_times) &&
+					(!e.tags.operator) &&
+					(!e.tags.brand) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(true);
+				}
+				if (e.tags.collection_times) {
+					popupContent.appendCollectionTimes(e.tags.collection_times);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.brand) {
+					popupContent.appendBrand(e.tags.brand);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+				if (e.tags['addr:street']) {
+					popupContent.appendStreet(e.tags['addr:street']);
+				}
+				if (e.tags['addr:postcode']) {
+					popupContent.appendPostcode(e.tags['addr:postcode']);
+				}
+				if (e.tags['addr:housenumber']) {
+					popupContent.appendHousenumber(e.tags['addr:housenumber']);
+				}
+				if (e.tags['addr:city']) {
+					popupContent.appendCity(e.tags['addr:city']);
+				}
+				if (e.tags['addr:country']) {
+					popupContent.appendCountry(e.tags['addr:country']);
+				}
+				var checkArray = parseCheckTimes(e.tags);
+				var days = (checkArray[0] / (1000*60*60*24));
+				if (checkArray[0]) {
+					popupContent.appendFooter(e.type, e.id, days);
+				}
+
+				if ((!e.tags['collection_times:lastcheck']) &&
+					(!e.tags['collection_times:last_check']) &&
+					(!e.tags['lastcheck']) &&
+					(!e.tags['last_checked']) &&
+					(!e.tags['last_check']) &&
+					(!e.tags['check_date'])) {
+					popupContent.appendFooter(e.type, e.id, undefined);
+				};
+
+				var marker = L.AwesomeMarkers.icon({
+					icon: 'envelope',
+					prefix: 'fa',
+					markerColor: 'orange',
+					iconColor: 'white',
+					spin:false
+				});
+
+				var pos = new L.LatLng(e.lat, e.lon);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
+
+				this.instance.addLayer(marker);
+
+			}
+		}
+	});
 
 	var post_box_no_collection_times = new L.OverPassLayer({
 		minzoom: 12,
@@ -422,6 +523,7 @@ $(document).ready(function() {
 			"Briefkästen mit Leerung am Sonntag": post_box_sunday,
 			"Briefkästen ohne Leerungszeit": post_box_no_collection_times,
 			"Briefkästen älter als ein Jahr": post_box_check_collection_times,
+			"Briefkästen mit Adresse": post_box_addr_street,
 			"Versorgungsgebiet von Briefkästen": post_box_service_area
 		}
 	};
