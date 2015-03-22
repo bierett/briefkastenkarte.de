@@ -1,5 +1,60 @@
 $(document).ready(function() {
 
+	function PopupContent(title) {
+		this.content = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">' + title + '</div><div class="cell"></div></div>';
+
+		this.appendBrand = function(brand) {
+			var html = '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + brand + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendCollectionTimes = function(collectionTimes) {
+			var formattedCollectionTimes = collectionTimes.replace("Su", "So");
+			var html = '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + formattedCollectionTimes + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendFooter = function(type, id, days) {
+			var html = '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + type + '/' + id + '" target="_blank">Details anzeigen</a></small></div>';
+			if (days === undefined) {
+				html += '</div></div></div></div>';
+			}
+			else {
+				var formattedDays = Math.round(days);
+				html += '<div class="cell"><small>Zuletzt vor ' + formattedDays + ' Tagen überprüft.</small></div></div>';
+			}
+			this.content += html;
+		};
+
+		this.appendName = function(name) {
+			var html = '<div class="row_pp"><div class="cell"><b>Name:</b></div><div class="cell">' + name + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendNoFurtherInformation = function(useNoInfoClass) {
+			var cssClass = (useNoInfoClass === undefined || useNoInfoClass === false) ? "cell" : "cell_noinfo";
+			var html = '<div class="row_pp"><div class="' + cssClass +'">Keine weiteren Informationen verfügbar.</div></div>';
+			this.content += html;
+		};
+
+		this.appendOpeningHours = function(openingHours) {
+			var formattedOpeningHours = openingHours.replace("Su", "So");
+			var html = '<div class="row_pp"><div class="cell"><b>Öffnungszeiten:</b></div><div class="cell">' + formattedOpeningHours + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendOperator = function(operator) {
+			var html = '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + operator + '</div></div>';
+			this.content += html;
+		};
+
+		this.appendRef = function(ref) {
+			var html = '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + ref + '</div></div>';
+			this.content += html;
+		};
+	};
+
+
 	var map = new L.map('map').setView([50.7344700,7.0987190], 15);
 
 	var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -18,19 +73,40 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
+				var popupContent = new PopupContent("Briefkasten");
+				if ((!e.tags.collection_times) &&
+					(!e.tags.operator) &&
+					(!e.tags.brand) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(true);
+				}
+				if (e.tags.collection_times) {
+					popupContent.appendCollectionTimes(e.tags.collection_times);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.brand) {
+					popupContent.appendBrand(e.tags.brand);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+
 				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
+				if (checkArray[0]) {
+					popupContent.appendFooter(e.type, e.id, days);
+				}
 
-				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
-				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell_noinfo">Keine weiteren Informationen verfügbar.</div></div>'};
-
-				if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
-				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
-				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
-
-				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+				if ((!e.tags['collection_times:lastcheck']) &&
+					(!e.tags['collection_times:last_check']) &&
+					(!e.tags['lastcheck']) &&
+					(!e.tags['last_checked']) &&
+					(!e.tags['last_check']) &&
+					(!e.tags['check_date'])) {
+					popupContent.appendFooter(e.type, e.id, undefined);
+				};
 
 				var markerColor = e.tags.collection_times ? 'green':'red';
 
@@ -43,7 +119,7 @@ $(document).ready(function() {
 				});
 
 				var pos = new L.LatLng(e.lat, e.lon);
-				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
 
 				this.instance.addLayer(marker);
 
@@ -62,19 +138,39 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
+				var popupContent = new PopupContent("Briefkasten");
+				if ((!e.tags.collection_times) &&
+					(!e.tags.operator) &&
+					(!e.tags.brand) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(false);
+				}
+				if (e.tags.collection_times) {
+					popupContent.appendCollectionTimes(e.tags.collection_times);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.brand) {
+					popupContent.appendBrand(e.tags.brand);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+
 				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
+				if (checkArray[0]) {
+					popupContent.appendFooter(e.type, e.id, days);
+				}
 
-				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
-				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
-
-				if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
-				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
-				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
-
-				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+				if ((!e.tags['collection_times:lastcheck']) &&
+					(!e.tags['collection_times:last_check']) &&
+					(!e.tags['lastcheck']) &&
+					(!e.tags['last_checked']) &&
+					(!e.tags['last_check']) && (!e.tags['check_date']))  {
+					popupContent.appendFooter(e.type, e.id, undefined);
+				};
 
 				var marker = L.AwesomeMarkers.icon({
 					icon: 'envelope',
@@ -85,7 +181,7 @@ $(document).ready(function() {
 				});
 
 				var pos = new L.LatLng(e.lat, e.lon);
-				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
 
 				this.instance.addLayer(marker);
 
@@ -104,19 +200,39 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
+				var popupContent = new PopupContent("Briefkasten");
+				if ((!e.tags.collection_times) &&
+					(!e.tags.operator) &&
+					(!e.tags.brand) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(false);
+				}
+				if (e.tags.collection_times) {
+					popupContent.appendCollectionTimes(e.tags.collection_times);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.brand) {
+					popupContent.appendBrand(e.tags.brand);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+
 				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
+				if (checkArray[0]) {
+					popupContent.appendFooter(e.type, e.id, days);
+				}
 
-				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
-				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
-
-				if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
-				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
-				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
-
-				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+				if ((!e.tags['collection_times:lastcheck']) &&
+					(!e.tags['collection_times:last_check']) &&
+					(!e.tags['lastcheck']) &&
+					(!e.tags['last_checked']) &&
+					(!e.tags['last_check']) && (!e.tags['check_date']))  {
+					popupContent.appendFooter(e.type, e.id, undefined);
+				};
 
 				var marker = L.AwesomeMarkers.icon({
 					icon: 'envelope',
@@ -127,7 +243,7 @@ $(document).ready(function() {
 				});
 
 				var pos = new L.LatLng(e.lat, e.lon);
-				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
 
 				this.instance.addLayer(marker);
 
@@ -165,19 +281,39 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
+				var popupContent = new PopupContent("Briefkasten");
+				if ((!e.tags.collection_times) &&
+					(!e.tags.operator) &&
+					(!e.tags.brand) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(false);
+				}
+				if (e.tags.collection_times) {
+					popupContent.appendCollectionTimes(e.tags.collection_times);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.brand) {
+					popupContent.appendBrand(e.tags.brand);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+
 				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
+				if (checkArray[0]) {
+					popupContent.appendFooter(e.type, e.id, days);
+				}
 
-				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
-				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
-
-				if (e.tags.collection_times) {popup = popup + '<div class="row_pp"><div class="cell"><b>Leerungsszeiten:</b></div><div class="cell">' + e.tags.collection_times.replace("Su", "So") + '</div></div>'};
-				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
-				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
-
-				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
+				if ((!e.tags['collection_times:lastcheck']) &&
+					(!e.tags['collection_times:last_check']) &&
+					(!e.tags['lastcheck']) &&
+					(!e.tags['last_checked']) &&
+					(!e.tags['last_check']) && (!e.tags['check_date']))  {
+					popupContent.appendFooter(e.type, e.id, undefined);
+				};
 
 				var marker = L.AwesomeMarkers.icon({
 					icon: 'envelope',
@@ -188,7 +324,7 @@ $(document).ready(function() {
 				});
 
 				var pos = new L.LatLng(e.lat, e.lon);
-				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
 
 				this.instance.addLayer(marker);
 
@@ -207,15 +343,27 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
+				var popupContent = new PopupContent("Poststelle");
 
-				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Poststelle</div><div class="cell"></div></div>';
-				if ((!e.tags.opening_hours) && (!e.tags.operator) && (!e.tags.name) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
-
-				if (e.tags.name) {popup = popup + '<div class="row_pp"><div class="cell"><b>Name:</b></div><div class="cell">' + e.tags.name + '</div></div>'};
-				if (e.tags.opening_hours) {popup = popup + '<div class="row_pp"><div class="cell"><b>Öffnungszeiten:</b></div><div class="cell">' + e.tags.opening_hours.replace("Su", "So") + '</div></div>'};
-				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
-				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>';
+				if ((!e.tags.opening_hours) &&
+					(!e.tags.operator) &&
+					(!e.tags.name) &&
+					(!e.tags.ref)) {
+					popupContent.appendNoFurtherInformation(false);
+				}
+				if (e.tags.name) {
+					popupContent.appendName(e.tags.name);
+				}
+				if (e.tags.opening_hours) {
+					popupContent.appendOpeningHours(e.tags.opening_hours);
+				}
+				if (e.tags.operator) {
+					popupContent.appendOperator(e.tags.operator);
+				}
+				if (e.tags.ref) {
+					popupContent.appendRef(e.tags.ref);
+				}
+				popupContent.appendFooter(e.type, e.id, undefined);
 
 				var markerColor = e.tags.opening_hours ? 'green':'red';
 
@@ -228,7 +376,7 @@ $(document).ready(function() {
 				});
 
 				var pos = new L.LatLng(e.lat, e.lon);
-				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
+				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
 
 				this.instance.addLayer(marker);
 
