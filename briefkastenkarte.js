@@ -28,7 +28,6 @@ $(document).ready(function() {
 				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
 				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
 				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
 				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
 
 				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
@@ -73,7 +72,6 @@ $(document).ready(function() {
 				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
 				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
 				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
 				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
 
 				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
@@ -116,7 +114,6 @@ $(document).ready(function() {
 				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
 				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
 				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
 				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
 
 				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
@@ -178,7 +175,6 @@ $(document).ready(function() {
 				if (e.tags.operator) {popup = popup + '<div class="row_pp"><div class="cell"><b>Betreiber:</b></div><div class="cell">' + e.tags.operator + '</div></div>'};
 				if (e.tags.brand) {popup = popup + '<div class="row_pp"><div class="cell"><b>Marke:</b></div><div class="cell">' + e.tags.brand + '</div></div>'};
 				if (e.tags.ref) {popup = popup + '<div class="row_pp"><div class="cell"><b>Standort:</b></div><div class="cell">' + e.tags.ref + '</div></div>'};
-				//if (e.tags['collection_times:lastcheck']) {popup = popup + '<div class="row_pp"><div class="cell"><b>Zuletzt aktualisiert:</b></div><div class="cell">' + date + ". " + month + " " + year + '</div></div>'};
 				if (checkArray[0]) {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div><div class="cell"><small>Zuletzt vor ' + Math.round(days) + ' Tagen überprüft.</small></div></div>'};
 
 				if ((!e.tags['collection_times:lastcheck']) && (!e.tags['collection_times:last_check']) && (!e.tags['lastcheck']) && (!e.tags['last_checked']) && (!e.tags['last_check']) && (!e.tags['check_date']))  {popup = popup + '<div class="row_pp"><div class="cell"><small><a href="http://www.openstreetmap.org/' + e.type + '/' + e.id + '" target="_blank">Details anzeigen</a></small></div></div></div></div></div>'};
