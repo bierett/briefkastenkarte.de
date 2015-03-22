@@ -18,63 +18,10 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
-				var currentTime = new Date(); //today
-
-				//collection_times:lastcheck
-				var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
-				var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
-				var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
-
-				//collection_times:last_check
-				var collection_times_last_check = e.tags['collection_times:last_check'];
-				var collection_times_last_check_d = new Date(collection_times_last_check);
-				var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
-
-				//lastcheck
-				var lastcheck = e.tags['lastcheck'];
-				var lastcheck_d = new Date(lastcheck);
-				var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
-
-				//last_checked
-				var last_checked = e.tags['last_checked'];
-				var last_checked_d = new Date(last_checked);
-				var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
-
-				//last_check
-				var last_check = e.tags['last_check'];
-				var last_check_d = new Date(last_check);
-				var last_check_milliseconds = Math.abs(currentTime-last_check_d);
-
-				//check_date
-				var check_date = e.tags['check_date'];
-				var check_date_d = new Date(check_date);
-				var check_date_milliseconds = Math.abs(currentTime-check_date_d);
-
-				var checkArray = new Array(6);
-				if (e.tags['collection_times:lastcheck']) {
-					checkArray[0] = collection_times_lastcheck_milliseconds;
-				};
-				if (e.tags['collection_times:last_check']) {
-					checkArray[1] = collection_times_last_check_milliseconds;
-				};
-				if (e.tags['lastcheck']) {
-					checkArray[2] = lastcheck_milliseconds;
-				};
-				if (e.tags['last_checked']) {
-					checkArray[3] = last_checked_milliseconds;
-				};
-				if (e.tags['last_check']) {
-					checkArray[4] = last_check_milliseconds;
-				};
-				if (e.tags['check_date']) {
-					checkArray[5] = check_date_milliseconds;
-				};
-
-				checkArray.sort(function(a, b){return a-b});
+				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
 
 				var popup = this.instance._poiInfo(e.tags,e.id);
-
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell_noinfo">Keine weiteren Informationen verfügbar.</div></div>'};
 
@@ -117,63 +64,10 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
-				var currentTime = new Date(); //today
-
-				//collection_times:lastcheck
-				var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
-				var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
-				var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
-
-				//collection_times:last_check
-				var collection_times_last_check = e.tags['collection_times:last_check'];
-				var collection_times_last_check_d = new Date(collection_times_last_check);
-				var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
-
-				//lastcheck
-				var lastcheck = e.tags['lastcheck'];
-				var lastcheck_d = new Date(lastcheck);
-				var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
-
-				//last_checked
-				var last_checked = e.tags['last_checked'];
-				var last_checked_d = new Date(last_checked);
-				var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
-
-				//last_check
-				var last_check = e.tags['last_check'];
-				var last_check_d = new Date(last_check);
-				var last_check_milliseconds = Math.abs(currentTime-last_check_d);
-
-				//check_date
-				var check_date = e.tags['check_date'];
-				var check_date_d = new Date(check_date);
-				var check_date_milliseconds = Math.abs(currentTime-check_date_d);
-
-				var checkArray = new Array(6);
-				if (e.tags['collection_times:lastcheck']) {
-					checkArray[0] = collection_times_lastcheck_milliseconds;
-				};
-				if (e.tags['collection_times:last_check']) {
-					checkArray[1] = collection_times_last_check_milliseconds;
-				};
-				if (e.tags['lastcheck']) {
-					checkArray[2] = lastcheck_milliseconds;
-				};
-				if (e.tags['last_checked']) {
-					checkArray[3] = last_checked_milliseconds;
-				};
-				if (e.tags['last_check']) {
-					checkArray[4] = last_check_milliseconds;
-				};
-				if (e.tags['check_date']) {
-					checkArray[5] = check_date_milliseconds;
-				};
-
-				checkArray.sort(function(a, b){return a-b});
+				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
 
 				var popup = this.instance._poiInfo(e.tags,e.id);
-
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
 
@@ -214,59 +108,7 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
-				var currentTime = new Date(); //today
-
-				//collection_times:lastcheck
-				var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
-				var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
-				var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
-
-				//collection_times:last_check
-				var collection_times_last_check = e.tags['collection_times:last_check'];
-				var collection_times_last_check_d = new Date(collection_times_last_check);
-				var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
-
-				//lastcheck
-				var lastcheck = e.tags['lastcheck'];
-				var lastcheck_d = new Date(lastcheck);
-				var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
-
-				//last_checked
-				var last_checked = e.tags['last_checked'];
-				var last_checked_d = new Date(last_checked);
-				var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
-
-				//last_check
-				var last_check = e.tags['last_check'];
-				var last_check_d = new Date(last_check);
-				var last_check_milliseconds = Math.abs(currentTime-last_check_d);
-
-				//check_date
-				var check_date = e.tags['check_date'];
-				var check_date_d = new Date(check_date);
-				var check_date_milliseconds = Math.abs(currentTime-check_date_d);
-
-				var checkArray = new Array(6);
-				if (e.tags['collection_times:lastcheck']) {
-					checkArray[0] = collection_times_lastcheck_milliseconds;
-				};
-				if (e.tags['collection_times:last_check']) {
-					checkArray[1] = collection_times_last_check_milliseconds;
-				};
-				if (e.tags['lastcheck']) {
-					checkArray[2] = lastcheck_milliseconds;
-				};
-				if (e.tags['last_checked']) {
-					checkArray[3] = last_checked_milliseconds;
-				};
-				if (e.tags['last_check']) {
-					checkArray[4] = last_check_milliseconds;
-				};
-				if (e.tags['check_date']) {
-					checkArray[5] = check_date_milliseconds;
-				};
-
-				checkArray.sort(function(a, b){return a-b});
+				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
 
 				var popup = this.instance._poiInfo(e.tags,e.id);
@@ -329,59 +171,7 @@ $(document).ready(function() {
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
 
-				var currentTime = new Date(); //today
-
-				//collection_times:lastcheck
-				var collection_times_lastcheck = e.tags['collection_times:lastcheck'];
-				var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
-				var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
-
-				//collection_times:last_check
-				var collection_times_last_check = e.tags['collection_times:last_check'];
-				var collection_times_last_check_d = new Date(collection_times_last_check);
-				var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
-
-				//lastcheck
-				var lastcheck = e.tags['lastcheck'];
-				var lastcheck_d = new Date(lastcheck);
-				var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
-
-				//last_checked
-				var last_checked = e.tags['last_checked'];
-				var last_checked_d = new Date(last_checked);
-				var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
-
-				//last_check
-				var last_check = e.tags['last_check'];
-				var last_check_d = new Date(last_check);
-				var last_check_milliseconds = Math.abs(currentTime-last_check_d);
-
-				//check_date
-				var check_date = e.tags['check_date'];
-				var check_date_d = new Date(check_date);
-				var check_date_milliseconds = Math.abs(currentTime-check_date_d);
-
-				var checkArray = new Array(6);
-				if (e.tags['collection_times:lastcheck']) {
-					checkArray[0] = collection_times_lastcheck_milliseconds;
-				};
-				if (e.tags['collection_times:last_check']) {
-					checkArray[1] = collection_times_last_check_milliseconds;
-				};
-				if (e.tags['lastcheck']) {
-					checkArray[2] = lastcheck_milliseconds;
-				};
-				if (e.tags['last_checked']) {
-					checkArray[3] = last_checked_milliseconds;
-				};
-				if (e.tags['last_check']) {
-					checkArray[4] = last_check_milliseconds;
-				};
-				if (e.tags['check_date']) {
-					checkArray[5] = check_date_milliseconds;
-				};
-
-				checkArray.sort(function(a, b){return a-b});
+				var checkArray = parseCheckTimes(e.tags);
 				var days = (checkArray[0] / (1000*60*60*24));
 
 				var popup = this.instance._poiInfo(e.tags,e.id);
@@ -574,5 +364,63 @@ $(document).ready(function() {
 	//L.control.layers(baseMaps, groupedOverlays, options).addTo(map);
 	//L.control.groupedLayers(baseMaps, groupedOverlays, options).addTo(map);
 	L.control.groupedLayers(baseMaps, groupedOverlays).addTo(map);
+
+
+
+	function parseCheckTimes(tags) {
+		var currentTime = new Date(); //today
+
+		//collection_times:lastcheck
+		var collection_times_lastcheck = tags['collection_times:lastcheck'];
+		var collection_times_lastcheck_d = new Date(collection_times_lastcheck);
+		var collection_times_lastcheck_milliseconds = Math.abs(currentTime-collection_times_lastcheck_d);
+
+		//collection_times:last_check
+		var collection_times_last_check = tags['collection_times:last_check'];
+		var collection_times_last_check_d = new Date(collection_times_last_check);
+		var collection_times_last_check_milliseconds = Math.abs(currentTime-collection_times_last_check_d);
+
+		//lastcheck
+		var lastcheck = tags['lastcheck'];
+		var lastcheck_d = new Date(lastcheck);
+		var lastcheck_milliseconds = Math.abs(currentTime-lastcheck_d);
+
+		//last_checked
+		var last_checked = tags['last_checked'];
+		var last_checked_d = new Date(last_checked);
+		var last_checked_milliseconds = Math.abs(currentTime-last_checked_d);
+
+		//last_check
+		var last_check = tags['last_check'];
+		var last_check_d = new Date(last_check);
+		var last_check_milliseconds = Math.abs(currentTime-last_check_d);
+
+		//check_date
+		var check_date = tags['check_date'];
+		var check_date_d = new Date(check_date);
+		var check_date_milliseconds = Math.abs(currentTime-check_date_d);
+
+		var checkArray = new Array(6);
+		if (tags['collection_times:lastcheck']) {
+			checkArray[0] = collection_times_lastcheck_milliseconds;
+		};
+		if (tags['collection_times:last_check']) {
+			checkArray[1] = collection_times_last_check_milliseconds;
+		};
+		if (tags['lastcheck']) {
+			checkArray[2] = lastcheck_milliseconds;
+		};
+		if (tags['last_checked']) {
+			checkArray[3] = last_checked_milliseconds;
+		};
+		if (tags['last_check']) {
+			checkArray[4] = last_check_milliseconds;
+		};
+		if (tags['check_date']) {
+			checkArray[5] = check_date_milliseconds;
+		};
+
+		return checkArray.sort(function(a, b){return a-b});
+	}
 
 });
