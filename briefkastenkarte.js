@@ -17,8 +17,6 @@ $(document).ready(function() {
 
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
-				var pos = new L.LatLng(e.lat, e.lon);
-				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var currentTime = new Date(); //today
 
@@ -74,6 +72,8 @@ $(document).ready(function() {
 
 				checkArray.sort(function(a, b){return a-b});
 				var days = (checkArray[0] / (1000*60*60*24));
+
+				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell_noinfo">Keine weiteren Informationen verfügbar.</div></div>'};
@@ -97,6 +97,7 @@ $(document).ready(function() {
 					spin:false
 				});
 
+				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 				this.instance.addLayer(marker);
@@ -115,8 +116,6 @@ $(document).ready(function() {
 
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
-				var pos = new L.LatLng(e.lat, e.lon);
-				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var currentTime = new Date(); //today
 
@@ -172,6 +171,8 @@ $(document).ready(function() {
 
 				checkArray.sort(function(a, b){return a-b});
 				var days = (checkArray[0] / (1000*60*60*24));
+
+				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
@@ -193,6 +194,7 @@ $(document).ready(function() {
 					spin:false
 				});
 
+				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 				this.instance.addLayer(marker);
@@ -211,8 +213,6 @@ $(document).ready(function() {
 
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
-				var pos = new L.LatLng(e.lat, e.lon);
-				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var currentTime = new Date(); //today
 
@@ -269,6 +269,7 @@ $(document).ready(function() {
 				checkArray.sort(function(a, b){return a-b});
 				var days = (checkArray[0] / (1000*60*60*24));
 
+				var popup = this.instance._poiInfo(e.tags,e.id);
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
 
@@ -289,6 +290,7 @@ $(document).ready(function() {
 					spin:false
 				});
 
+				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 				this.instance.addLayer(marker);
@@ -326,8 +328,6 @@ $(document).ready(function() {
 
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
-				var pos = new L.LatLng(e.lat, e.lon);
-				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var currentTime = new Date(); //today
 
@@ -384,6 +384,7 @@ $(document).ready(function() {
 				checkArray.sort(function(a, b){return a-b});
 				var days = (checkArray[0] / (1000*60*60*24));
 
+				var popup = this.instance._poiInfo(e.tags,e.id);
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Briefkasten</div><div class="cell"></div></div>';
 				if ((!e.tags.collection_times) && (!e.tags.operator) && (!e.tags.brand) && (!e.tags.ref)) {popup = popup + '<div class="row_pp"><div class="cell">Keine weiteren Informationen verfügbar.</div></div>'};
 
@@ -404,6 +405,7 @@ $(document).ready(function() {
 					spin:false
 				});
 
+				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 				this.instance.addLayer(marker);
@@ -422,7 +424,7 @@ $(document).ready(function() {
 
 				if (e.id in this.instance._ids) return;
 				this.instance._ids[e.id] = true;
-				var pos = new L.LatLng(e.lat, e.lon);
+
 				var popup = this.instance._poiInfo(e.tags,e.id);
 
 				var popup = '<div class="wrapper"><div class="table"><div class="row_pp header green"><div class="cell">Poststelle</div><div class="cell"></div></div>';
@@ -444,6 +446,7 @@ $(document).ready(function() {
 					spin:false
 				});
 
+				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popup);
 
 				this.instance.addLayer(marker);
