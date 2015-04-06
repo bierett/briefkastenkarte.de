@@ -132,6 +132,35 @@ $(document).ready(function() {
 					popupContent.appendFooter(e.type, e.id, undefined);
 				};
 
+				var mailBox = new MailBox();
+				if (e.tags.operator) {
+					mailBox.operator = e.tags.operator.trim();
+				}
+				if (e.tags.brand) {
+					mailBox.brand = e.tags.brand.trim();
+				}
+				if (e.tags.ref) {
+					mailBox.ref = e.tags.ref.trim();
+				}
+
+
+				var weeklyCollectionTimes = e.tags.collection_times;
+				if (weeklyCollectionTimes) {
+					// Trim white space
+					weeklyCollectionTimes = weeklyCollectionTimes.trim();
+					// Replace multiple spaces with single space
+					weeklyCollectionTimes = weeklyCollectionTimes.replace(/\s+/g, " ");
+					if (weeklyCollectionTimes.length > 0) {
+						var collectionTimesChunks = weeklyCollectionTimes.split(";")
+
+						// This is an array of WeekDayCollectionTimes objects
+						var weekCollectionTimes = parseWeekCollectionTimes(collectionTimesChunks);
+						if (weekCollectionTimes.length > 0) {
+							mailBox.weekCollectionTimes = weekCollectionTimes;
+						}
+					}
+				}
+
 				var markerColor = e.tags.collection_times ? 'green':'red';
 
 				var marker = L.AwesomeMarkers.icon({
@@ -144,6 +173,7 @@ $(document).ready(function() {
 
 				var pos = new L.LatLng(e.lat, e.lon);
 				var marker = L.marker(pos, {icon: marker}).bindPopup(popupContent.content);
+				marker.mailBox = mailBox;
 
 				this.instance.addLayer(marker);
 
@@ -628,6 +658,11 @@ $(document).ready(function() {
 		stopEventPropagation(event);
 	});
 
+	$("#collection-times-filter").submit(function(event) {
+		event.preventDefault();
+		filterPoints();
+	});
+
 	function updateCollectionTimesFilterFormVisibility(visible) {
 		var formElement = $(".collection-times-form");
 		if (visible) {
@@ -638,12 +673,75 @@ $(document).ready(function() {
 		}
 	}
 
+	function updateCollectionTimesFilterError(message) {
+		var errorElement = $("#collection-times-filter-error");
+		if (message === undefined) {
+			errorElement.hide();
+		}
+		else {
+			errorElement.text(message);
+			errorElement.show();
+		}
+	}
+
 	function stopEventPropagation(event) {
 		if (event.stopPropagation) {
 			event.stopPropagation();
 		}
 		else if (event.cancelBubble !== null) {
 			event.cancelBubble = true;
+		}
+	}
+
+	function filterPoints() {
+		var startTime = $("#start-time").val();
+		var endTime = $("#end-time").val();
+		var queryWeekDay = eval($("#week-day").val());
+		if (startTime === undefined || endTime === undefined || queryWeekDay === undefined) {
+			throw "Error with week day, start or end time chosen by the user."
+		}
+		var queryStartTime = new CollectionTime(startTime);
+		var queryEndTime = new CollectionTime(endTime);
+		var queryDateRange = new DateRange(queryStartTime, queryEndTime);
+		if (startTime === endTime) {
+			updateCollectionTimesFilterError("Beide Zeiten sind gleich.");
+			return;
+		}
+		if (queryDateRange.isValid()) {
+			updateCollectionTimesFilterError(undefined);
+		}
+		else {
+			updateCollectionTimesFilterError("Tageübergreifende Suche wird nicht unterstützt.");
+			return;
+		}
+		var queryWeekDayDateRange = new WeekDayDateRange(queryWeekDay, queryDateRange);
+
+		var mapLayers = map._layers;
+		for (var key in mapLayers) {
+			if (mapLayers.hasOwnProperty(key)) {
+				// This object might be a marker
+				var object = mapLayers[key];
+				if (object.hasOwnProperty("mailBox")) {
+					var weekCollectionTimes = object.mailBox.weekCollectionTimes;
+
+					if (weekCollectionTimes === undefined) {
+						throw "weekCollectionTimes should never be undefined"
+					}
+					var visible = weekCollectionTimes.length > 0 && queryWeekDayDateRange.contains(weekCollectionTimes);
+					updateMarkerVisibility(object, visible);
+				}
+			}
+		}
+	}
+
+	function updateMarkerVisibility(marker, visible) {
+		if (visible) {
+			marker._icon.style.display = "block";
+			marker._shadow.style.display = "block";
+		}
+		else {
+			marker._icon.style.display = "none";
+			marker._shadow.style.display = "none";
 		}
 	}
 
