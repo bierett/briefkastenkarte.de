@@ -85,10 +85,93 @@
 <div id="page">
     <div id="content" class="site-content">
         <div id="map" />
+            <div class="leaflet-control-container">
+                <div class="leaflet-top leaflet-left">
+                    <div class="leaflet-control-zoom leaflet-bar leaflet-control collection-times-form">
+
+                        <div>
+                            <h1>Briefk&auml;sten nach Abholzeiten filtern</h1>
+                            <form id="collection-times-filter" action="#">
+                                <label for="week-day">Am</label>
+                                <select name="week-day" id="week-day">
+                                    <option value="WeekDays.monday">Montag</option>
+                                    <option value="WeekDays.tuesday">Dienstag</option>
+                                    <option value="WeekDays.wednesday">Mittwoch</option>
+                                    <option value="WeekDays.thursday">Donnerstag</option>
+                                    <option value="WeekDays.friday">Freitag</option>
+                                    <option value="WeekDays.saturday">Samstag</option>
+                                    <option value="WeekDays.sunday">Sonntag</option>
+                                </select>
+                                <label for="start-time">zwischen</label>
+                                <select name="start-time" id="start-time">
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00" selected>08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="00:00">00:00</option>
+                                </select>
+                                <label for="end-time">und</label>
+                                <select name="end-time" id="end-time">
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00" selected>12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="00:00">00:00</option>
+                                </select>
+                                <input type="submit" value="Absenden" />
+                            </form>
+                            <form id="collection-times-filter-reset" action="#">
+                                <input type="submit" value="Alle Briefkästen anzeigen" />
+                            </form>
+                            <p id="collection-times-filter-error" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 
 <script type="text/javascript" src="external/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="js/mailbox.js"></script>
 <script src="briefkastenkarte.js"></script>
 
 </body>

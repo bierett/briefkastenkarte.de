@@ -110,3 +110,30 @@ Begin
 CSS map
 End
 */
+
+
+.collection-times-form h1 {
+  margin: 0 0 0.25em 0;
+  font-family: "Open Sans",sans-serif;
+  font-size: 1.3em;
+  color: #000;
+}
+
+.collection-times-form {
+  background: #fff;
+  width: 50em;
+  margin-left: 50px !important;
+  padding: 0.25em 1em;
+  z-index: 8;
+}
+
+#collection-times-filter {
+  display: inline;
+  float: left;
+  margin-right: 1em;
+}
+
+#collection-times-filter-error {
+  clear: both;
+  color: #ce3c29; /* marker red */
+}
