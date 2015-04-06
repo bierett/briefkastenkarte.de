@@ -663,6 +663,11 @@ $(document).ready(function() {
 		filterPoints();
 	});
 
+	$("#collection-times-filter-reset").submit(function(event) {
+		event.preventDefault();
+		showAllPoints();
+	});
+
 	function updateCollectionTimesFilterFormVisibility(visible) {
 		var formElement = $(".collection-times-form");
 		if (visible) {
@@ -690,6 +695,19 @@ $(document).ready(function() {
 		}
 		else if (event.cancelBubble !== null) {
 			event.cancelBubble = true;
+		}
+	}
+
+	function showAllPoints() {
+		var mapLayers = map._layers;
+		for (var key in mapLayers) {
+			if (mapLayers.hasOwnProperty(key)) {
+				// This object might be a marker
+				var object = mapLayers[key];
+				if (object.hasOwnProperty("mailBox")) {
+					updateMarkerVisibility(object, true);
+				}
+			}
 		}
 	}
 
