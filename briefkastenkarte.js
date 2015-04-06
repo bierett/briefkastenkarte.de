@@ -608,6 +608,30 @@ $(document).ready(function() {
 	L.control.groupedLayers(baseMaps, groupedOverlays).addTo(map);
 
 
+	// Show and hide collection time filter for mailboxes
+	// The filter is only displayed when the mailbox layer is active
+	map.on({
+		overlayadd: function(event) {
+			if (event.name === "Briefkästen") {
+				updateCollectionTimesFilterFormVisibility(true);
+			}
+		},
+		overlayremove: function(event) {
+			if (event.name === "Briefkästen") {
+				updateCollectionTimesFilterFormVisibility(false);
+			}
+		}
+	});
+
+	function updateCollectionTimesFilterFormVisibility(visible) {
+		var formElement = $(".collection-times-form");
+		if (visible) {
+			formElement.show();
+		}
+		else {
+			formElement.hide();
+		}
+	}
 
 	function parseCheckTimes(tags) {
 		var currentTime = new Date(); //today
