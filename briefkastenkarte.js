@@ -623,6 +623,11 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#collection-times-filter select").mousedown(function(event) {
+		// Drag the select drop down instead of the map
+		stopEventPropagation(event);
+	});
+
 	function updateCollectionTimesFilterFormVisibility(visible) {
 		var formElement = $(".collection-times-form");
 		if (visible) {
@@ -630,6 +635,15 @@ $(document).ready(function() {
 		}
 		else {
 			formElement.hide();
+		}
+	}
+
+	function stopEventPropagation(event) {
+		if (event.stopPropagation) {
+			event.stopPropagation();
+		}
+		else if (event.cancelBubble !== null) {
+			event.cancelBubble = true;
 		}
 	}
 
