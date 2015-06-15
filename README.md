@@ -1,5 +1,13 @@
 # briefkastenkarte.de
 
+## Installation
+Dependencies are managed with [bower](http://bower.io/#install-bower)
+In order to get the dependencies run 
+```
+bower install
+```
+This will read the ```bower.json``` and install everything into ```bower_components```
+
 ## License
 - *briefkastenkarte.de* is licensed under the [MIT License] [1] and includes other
 libraries or parts of libraries which have their own license file or license
