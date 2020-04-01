@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 	var post_box = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_box]);out;",
+		query: "node(BBOX)['amenity'='post_box'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -153,7 +153,7 @@ $(document).ready(function() {
 
 	var post_box_addr_street = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_box]['addr:street'~'.']);out;",
+		query: "node(BBOX)['amenity'='post_box']['addr:street'~'.'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -230,7 +230,7 @@ $(document).ready(function() {
 
 	var post_box_no_collection_times = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_box][collection_times!~'.']);out;",
+		query: "node(BBOX)['amenity'='post_box'][collection_times!~'.'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -292,7 +292,7 @@ $(document).ready(function() {
 
 	var post_box_sunday = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_box][collection_times~'Su']);out;",
+		query: "node(BBOX)['amenity'='post_box'][collection_times~'Su'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -353,6 +353,7 @@ $(document).ready(function() {
 	});
 	var currentTime = new Date(); //today
 	var day = currentTime.getDate();
+	var twoDigitsDay = (day < 10 ? '0' : '') + day;
 
 	var monthArray = new Array(12);
 	monthArray[0] = "01";
@@ -373,7 +374,7 @@ $(document).ready(function() {
 
 	var post_box_check_collection_times = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(   ( node(BBOX)[amenity=post_box];  - node(BBOX)[amenity=post_box](newer:'" + year + "-" + month + "-" + day + "T00:00:00Z'); ););out center meta;",
+		query: "(node(BBOX)['amenity'='post_box']; - node(BBOX)['amenity'='post_box'](newer:'" + year + "-" + month + "-" + twoDigitsDay + "T00:00:00Z'););out center meta;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -435,7 +436,7 @@ $(document).ready(function() {
 
 	var post_office = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_office ]);out;",
+		query: "node(BBOX)['amenity'='post_office'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
@@ -487,7 +488,7 @@ $(document).ready(function() {
 
 	var post_box_service_area = new L.OverPassLayer({
 		minzoom: 12,
-		query: "(node(BBOX)[amenity=post_box ]);out;",
+		query: "node(BBOX)['amenity'='post_box'];out;",
 
 		callback: function(data) {
 			for(var i=0;i<data.elements.length;i++) {
