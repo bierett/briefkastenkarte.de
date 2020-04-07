@@ -63,7 +63,7 @@ body {
   padding: 5px 15px;
   display: table-cell;
   width: 130px;
-  
+
 }
 @media screen and (max-width: 580px) {
   .cell {
@@ -75,7 +75,7 @@ body {
 .cell_noinfo {
   padding: 5px 15px;
   display: table-cell;
-  
+
 }
 @media screen and (max-width: 580px) {
   .cell_noinfo {
