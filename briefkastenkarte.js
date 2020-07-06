@@ -79,7 +79,7 @@ $(document).ready(function() {
 		};
 	};
 
-	var map = new L.map('map').setView([50.7344700,7.0987190], 15);
+	var map = new L.map('map').setView([52.52,13.405], 15);
 
 	var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> Mitwirkende',
