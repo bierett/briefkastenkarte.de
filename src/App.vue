@@ -42,6 +42,10 @@
   </v-sheet>
 </template>
 
+<style>
+  @import './assets/styles/briefkastenkarte.css';
+</style>
+
 <script>
 import Home from './components/Home';
 import FilterMap from './components/FilterMap';

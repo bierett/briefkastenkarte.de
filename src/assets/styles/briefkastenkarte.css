@@ -1,0 +1,3 @@
+.wrap-text {
+  -webkit-line-clamp: unset !important;
+}

@@ -33,7 +33,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Briefkasten</v-list-item-title>
-            <v-list-item-subtitle
+            <v-list-item-subtitle class="wrap-text"
               >Es werden alle Briefkasten (<a
                 href="https://wiki.openstreetmap.org/wiki/DE:Tag:amenity%3Dpost_box"
                 target="_blank"
@@ -51,7 +51,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Postfiliale</v-list-item-title>
-            <v-list-item-subtitle
+            <v-list-item-subtitle class="wrap-text"
               >Es werden alle Filialen (<a
                 href="https://wiki.openstreetmap.org/wiki/DE:Tag:amenity%3Dpost_office"
                 target="_blank"
@@ -69,7 +69,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Packstation</v-list-item-title>
-            <v-list-item-subtitle
+            <v-list-item-subtitle class="wrap-text"
               >Es werden alle Packstationen (<a
                 href="https://wiki.openstreetmap.org/wiki/DE:Tag:amenity%3Dvending_machine"
                 target="_blank"
@@ -100,7 +100,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Versorgungsgebiete</v-list-item-title>
-            <v-list-item-subtitle
+            <v-list-item-subtitle class="wrap-text"
               >Es werden die Versorgungsgebiete aller Briefkasten nach §2 Absatz
               2 der Post-Universaldienstleistungsverordnung (<a
                 href="http://www.gesetze-im-internet.de/pudlv/BJNR241800999.html"
