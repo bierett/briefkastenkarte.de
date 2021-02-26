@@ -15,6 +15,7 @@
   "main": "init.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "ol": "^6.5.0",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9",
     "vuetify": "^2.2.11"
