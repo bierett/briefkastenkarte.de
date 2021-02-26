@@ -1,3 +1,17 @@
+.map {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+}
+
+.zoom {
+  position: absolute;
+  z-index: 101;
+}
+
 .wrap-text {
   -webkit-line-clamp: unset !important;
 }
